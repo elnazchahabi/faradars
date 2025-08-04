@@ -1,0 +1,17 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+env/
+venv/
+
+# VSCode
+.vscode/
+
+# SQLite DB
+*.sqlite3
+
+# OS files
+.DS_Store
+Thumbs.db
