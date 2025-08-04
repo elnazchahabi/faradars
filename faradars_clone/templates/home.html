@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .hero {
+        background: linear-gradient(120deg, #001f3f, #005ca9);
+        color: white;
+        text-align: center;
+        padding: 80px 20px;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+    .hero input[type="text"] {
+        padding: 12px;
+        width: 50%;
+        max-width: 400px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .section {
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+    .section-title {
+        color: #002b5c;
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+
+    .cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        width: 200px;
+        transition: 0.3s ease;
+        text-decoration: none;
+        color: #002b5c;
+    }
+
+    .card:hover {
+        background: #eef3ff;
+        transform: translateY(-5px);
+    }
+
+    .features .card {
+        width: 220px;
+    }
+
+    .cta {
+        background: #005ca9;
+        color: white;
+        padding: 40px 20px;
+    }
+
+    .cta a {
+        background: white;
+        color: #005ca9;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .cta a:hover {
+        background: #f0f0f0;
+    }
+
+    .footer {
+        background: #001f3f;
+        color: white;
+        text-align: center;
+        padding: 30px 10px;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+        .hero h1 { font-size: 2rem; }
+        .hero p { font-size: 1rem; }
+        .hero input[type="text"] { width: 80%; }
+        .card { width: 100%; }
+    }
+</style>
+
+<!-- Hero -->
+<section class="hero">
+    <h1>یادگیری رو شروع کن</h1>
+    <p>دوره‌های تخصصی آنلاین با بهترین مدرس‌ها</p>
+    <input type="text" placeholder="چی می‌خوای یاد بگیری؟">
+</section>
+
+<!-- دسته‌بندی‌ها -->
+<section class="section categories">
+    <h2 class="section-title">فروشگاه فرادرس </h2>
+    <div class="cards">
+        <a href="#" class="card">کتاب برنامه نویسی</a>
+        <a href="#" class="card">جزوه های برنامه نویسی </a>
+        <a href="#" class="card"> کتاب دیجیتال</a>
+    </div>
+</section>
+
+<!-- دوره‌های جدید -->
+<section class="section courses">
+    <h2 class="section-title">جدیدترین دوره‌ها</h2>
+    <div class="cards">
+        <a href="#" class="card">پایتون مقدماتی</a>
+        <a href="#" class="card">ری‌اکت برای مبتدی‌ها</a>
+        <a href="#" class="card">آموزش وردپرس</a>
+        <a href="#" class="card">تحلیل داده با پانداس</a>
+    </div>
+</section>
+
+<!-- دوره‌های محبوب -->
+<section class="section popular-courses">
+    <h2 class="section-title">دوره‌های پرمخاطب</h2>
+    <div class="cards">
+        <a href="#" class="card">یادگیری ماشین</a>
+        <a href="#" class="card">گیت و گیت‌هاب</a>
+        <a href="#" class="card">آموزش اکسل پیشرفته</a>
+        <a href="#" class="card">زبان انگلیسی کاربردی</a>
+    </div>
+</section>
+
+<!-- ویژگی‌ها -->
+<section class="section features">
+    <h2 class="section-title">چرا فرادرس ما؟</h2>
+    <div class="cards">
+        <div class="card">📚 بیش از ۲۰۰۰ ساعت آموزش</div>
+        <div class="card">🎓 مدرک پایان دوره</div>
+        <div class="card">💬 پشتیبانی از مدرس</div>
+        <div class="card">🔓 دسترسی همیشگی</div>
+    </div>
+</section>
+
+<!-- نظرات کاربران -->
+<section class="section testimonials">
+    <h2 class="section-title">نظرات کاربران</h2>
+    <div class="cards">
+        <div class="card">«خیلی راضی بودم از کیفیت آموزش‌ها»</div>
+        <div class="card">«مدرس‌ها واقعاً حرفه‌ای هستن»</div>
+        <div class="card">«آموزش‌ها کامل و کاربردی بودن»</div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <h2>همین حالا ثبت‌نام کن و یادگیری رو شروع کن</h2>
+    <a href="{% url 'account_signup' %}">ثبت‌نام رایگان</a>
+</section>
+
+<!-- Footer -->
+<section class="footer">
+        فرادرس کلون  
+</section>
+{% endblock %}

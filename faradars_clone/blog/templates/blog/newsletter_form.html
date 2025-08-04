@@ -1,0 +1,17 @@
+<!-- templates/blog/newsletter_form.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container pt-5">
+  <div class="card bg-dark mb-4">
+    <div class="card-body">
+      <h5 style="color:#3a71c1;">عضویت در خبرنامه</h5>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary mt-2" style="background:#284b7e;">عضویت</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

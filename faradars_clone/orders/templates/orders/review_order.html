@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="review-order-box">
+  <h2>بررسی نهایی سفارش</h2>
+
+  <ul class="order-summary">
+    <li><strong>نام:</strong> {{ data.full_name }}</li>
+    <li><strong>موبایل:</strong> {{ data.mobile }}</li>
+    <li><strong>تلفن:</strong> {{ data.phone|default:"-" }}</li>
+    <li><strong>آدرس:</strong> {{ data.province }}، {{ data.city }}، {{ data.address }}</li>
+    <li><strong>کد پستی:</strong> {{ data.postal_code }}</li>
+    <li><strong>نوع ارسال:</strong> {{ order.get_delivery_type_display }}</li>
+    <li><strong>زمان ارسال:</strong> {{ data.delivery_time|default:"-" }}</li>
+    <li><strong>توضیحات:</strong> {{ data.note|default:"-" }}</li>
+  </ul>
+
+  <h4>دوره‌های خریداری شده:</h4>
+  <ul>
+    {% for item in items %}
+      <li>{{ item.course.title }} — {{ item.price }} تومان</li>
+    {% endfor %}
+  </ul>
+
+  <p><strong>مبلغ کل:</strong> {{ order.total_price }} تومان</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">پرداخت نهایی</button>
+  </form>
+</div>
+{% endblock %}

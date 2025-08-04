@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static humanize %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'courses/css/style.css' %}">
+<div class="courses-container">
+  <h2 class="main-title">دوره‌های برچسب: {{ tag.name }}</h2>
+  {% if courses %}
+    <div class="courses-grid">
+      {% for course in courses %}
+        <div class="course-card">
+          <a href="{% url 'courses:course_detail' course.slug %}">
+            <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" class="course-thumb" />
+            <div class="course-title">{{ course.title }}</div>
+          </a>
+          <div class="course-meta">
+            مدرس:
+            {% if course.instructor and course.instructor.user %}
+              <a href="{% url 'instructors:profile' course.instructor.user.username %}">
+                {{ course.instructor.get_full_name|default:course.instructor.user.username }}
+              </a>
+            {% else %}
+              <span style="color:#888;">نامشخص</span>
+            {% endif %}
+            <br>
+            قیمت:
+            {% if course.price == 0 %}
+              <span class="free">رایگان</span>
+            {% else %}
+              <span class="price">{{ course.price|intcomma }} تومان</span>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-message">در این برچسب هنوز دوره‌ای ثبت نشده.</div>
+  {% endif %}
+</div>
+{% endblock %}
+
+
+

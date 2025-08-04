@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h2>مقایسه محصولات</h2>
+{% if products %}
+<table class="compare-table">
+  <thead>
+    <tr class="compare-header-row">
+      <th class="feature-title">ویژگی</th>
+      {% for p in products %}
+        <th class="product-title">محصول {{ forloop.counter }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="compare-row">
+      <td class="feature-title">تصویر</td>
+      {% for p in products %}
+        <td class="product-image">
+          <img src="{{ p.image.url }}" class="compare-img">
+        </td>
+      {% endfor %}
+    </tr>
+    <tr class="compare-row">
+      <td class="feature-title">عنوان</td>
+      {% for p in products %}
+        <td class="product-name">{{ p.title }}</td>
+      {% endfor %}
+    </tr>
+    <tr class="compare-row">
+      <td class="feature-title">قیمت</td>
+      {% for p in products %}
+        <td class="product-price">{{ p.price }} تومان</td>
+      {% endfor %}
+    </tr>
+    <tr class="compare-row">
+      <td class="feature-title">موجودی</td>
+      {% for p in products %}
+        <td class="product-stock">{{ p.stock }}</td>
+      {% endfor %}
+    </tr>
+    <tr class="compare-row">
+      <td class="feature-title">دیجیتال؟</td>
+      {% for p in products %}
+        <td class="product-digital">{{ p.is_digital|yesno:"بله,خیر" }}</td>
+      {% endfor %}
+    </tr>
+    <tr class="compare-row">
+      <td class="feature-title">حذف</td>
+      {% for p in products %}
+        <td class="product-remove">
+          <a href="{% url 'store:remove_from_compare' p.id %}" class="remove-link">حذف</a>
+        </td>
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
+{% else %}
+<p class="no-compare-message">هیچ محصولی برای مقایسه انتخاب نشده است.</p>
+{% endif %}
+{% endblock %}

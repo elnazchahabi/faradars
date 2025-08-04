@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="store-header">
+  <h2>فروشگاه کتاب و محصولات</h2>
+</div>
+
+<div class="store-categories">
+  <h4>دسته‌بندی‌ها:</h4>
+
+  <ul>
+    {% for cat in categories %}
+      <li><a href="?category={{ cat.slug }}">{{ cat.title }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+<hr>
+<div class="store-product-list">
+  {% for p in products %}
+    <div class="product-card">
+      <a href="{% url 'store:product_detail' p.slug %}">
+        <img src="{{ p.image.url }}" alt="{{ p.title }}">
+        <div class="product-info">
+          <h3>{{ p.title }}</h3>
+          <p>{{ p.price }} تومان</p>
+          <hr>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

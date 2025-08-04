@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'courses/css/style.css' %}">
+<div class="courses-container">
+  <h2 class="main-title">برچسب‌های سایت</h2>
+  <div class="tags-list">
+    {% for tag in tags %}
+      <a href="{% url 'courses:tag_courses' tag.slug %}" class="tag-badge">{{ tag.name }}</a>
+    {% empty %}
+      <div class="empty-message">هیچ برچسبی ثبت نشده.</div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+

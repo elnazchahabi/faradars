@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'support/css/support.css' %}">
+<div class="ticket-list-container admin-list">
+    <h2 class="ticket-list-header">همه تیکت‌ها</h2>
+    <div class="table-responsive">
+        <table class="tickets-table">
+            <thead>
+                <tr>
+                    <th>ردیف</th>
+                    <th>موضوع</th>
+                    <th>کاربر</th>
+                    <th>ایمیل</th>
+                    <th>تاریخ</th>
+                    <th>وضعیت</th>
+                    <th>مشاهده</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in tickets %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ t.subject }}</td>
+                    <td>{{ t.user.username }}</td>
+                    <td>{{ t.user.email }}</td>
+                    <td>{{ t.created_at|date:"Y/m/d H:i" }}</td>
+                    <td>
+                        <span class="status-badge status-{{ t.status }}">
+                            {{ t.get_status_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{% url 'admin_ticket_detail' t.pk %}" class="btn-table-view">مشاهده</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" style="text-align:center;">هیچ تیکتی وجود ندارد.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

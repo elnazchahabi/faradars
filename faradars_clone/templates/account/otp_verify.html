@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}تأیید شماره موبایل{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'accounts/css/account.css' %}">
+
+<div class="card-accounts">
+  <h2>تأیید شماره موبایل</h2>
+
+  <p>کد تأیید برای شماره <strong>{{ mobile }}</strong> ارسال شد.</p>
+
+  <form method="post" class="account-form">
+    {% csrf_token %}
+    <label for="id_code">کد تأیید:</label>
+    {{ form.code }}
+    <button type="submit" class="btn-accounts">تأیید</button>
+  </form>
+
+  <div class="account-footer">
+    <a href="{% url 'account_login' %}">بازگشت به ورود</a>
+  </div>
+</div>
+{% endblock %}

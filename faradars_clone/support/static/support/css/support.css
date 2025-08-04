@@ -1,0 +1,223 @@
+body {
+    background: #f6f8fc;
+}
+
+.ticket-container {
+    max-width: 520px;
+    margin: 45px auto 0 auto;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px #0001;
+    padding: 30px 34px 24px 34px;
+}
+
+.ticket-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.ticket-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    color: #243746;
+}
+
+.ticket-status {
+    font-size: 14px;
+    padding: 5px 15px;
+    background: #f5f6fa;
+    border-radius: 18px;
+    color: #119e69;
+    border: 1px solid #dbf3ea;
+    margin-right: 8px;
+    margin-bottom: 0;
+}
+
+.ticket-messages {
+    border: 1px solid #e3e7ec;
+    background: #f7fafd;
+    border-radius: 12px;
+    padding: 14px 8px 10px 8px;
+    margin-bottom: 18px;
+    min-height: 120px;
+    max-height: 340px;
+    overflow-y: auto;
+}
+
+.message-row {
+    display: flex;
+    margin-bottom: 13px;
+}
+.user-row {
+    justify-content: flex-end;
+}
+.admin-row {
+    justify-content: flex-start;
+}
+.message-bubble {
+    max-width: 68%;
+    padding: 10px 18px;
+    border-radius: 16px;
+    font-size: 15px;
+    min-width: 80px;
+    box-shadow: 0 1px 5px #eee;
+    position: relative;
+    direction: rtl;
+    word-break: break-word;
+}
+.message-user {
+    background: #e1ffe1;
+    color: #19591a;
+    text-align: right;
+    align-items: flex-end;
+}
+.message-admin {
+    background: #e0e7ff;
+    color: #284089;
+    text-align: left;
+    align-items: flex-start;
+}
+.sender-name {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #444;
+}
+.message-meta {
+    font-size: 11.5px;
+    color: #888;
+    margin-top: 4px;
+    text-align: left;
+    direction: ltr;
+}
+
+.message-form-flex {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    margin-top: 8px;
+}
+
+.message-form-flex textarea {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #d0e2f7;
+    font-size: 15px;
+    padding: 8px 12px;
+    resize: none;
+    min-height: 38px;
+    background: #f7fbff;
+    color: #1a2536;
+}
+
+.send-button {
+    background: #229cf7;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.send-button:hover {
+    background: #1476c7;
+}
+
+.return-btn {
+    margin-top: 25px;
+    width: 140px;
+    display: block;
+    text-align: center;
+    font-size: 15px;
+    background: #229cf7;
+}
+
+.closed-ticket-alert {
+    margin-top: 15px;
+    color: #b00;
+    background: #ffeaea;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 15px;
+    text-align: center;
+}
+
+
+.admin-list {
+    margin-top: 40px;
+    padding: 32px 20px 26px 20px;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 2px 16px #0001;
+    max-width: 1100px;
+}
+.tickets-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+    background: #fafbff;
+    font-size: 15px;
+}
+.tickets-table th, .tickets-table td {
+    padding: 12px 10px;
+    text-align: center;
+    border-bottom: 1px solid #e6e6e6;
+}
+.tickets-table th {
+    background: #f2f7fb;
+    color: #195497;
+    font-weight: 600;
+}
+.tickets-table tr:hover {
+    background: #f1f9ff;
+}
+.status-badge {
+    padding: 5px 18px;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+.status-open {
+    background: #e9f6ff;
+    color: #267da8;
+    border: 1px solid #b9e4ff;
+}
+.status-pending {
+    background: #fffde5;
+    color: #e1a82b;
+    border: 1px solid #ffe5b3;
+}
+.status-answered {
+    background: #e7ffe7;
+    color: #23ab38;
+    border: 1px solid #bef7c4;
+}
+.status-closed {
+    background: #ffeaea;
+    color: #b42a3a;
+    border: 1px solid #ffbfc7;
+}
+.btn-table-view {
+    padding: 5px 18px;
+    background: #119e69;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.btn-table-view:hover {
+    background: #0a7a4a;
+}
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}

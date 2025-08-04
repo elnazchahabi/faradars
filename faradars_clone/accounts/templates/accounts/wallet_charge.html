@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="wallet-charge-container">
+  <h2>شارژ کیف پول</h2>
+
+  <p class="wallet-balance">موجودی فعلی: <strong>{{ wallet.balance|intcomma }}</strong> ریال</p>
+
+  <form method="post" class="wallet-charge-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="wallet-btn">شارژ</button>
+  </form>
+
+  <a href="{% url 'dashboard' %}" class="wallet-back-link">بازگشت به داشبورد</a>
+</div>
+{% endblock %}

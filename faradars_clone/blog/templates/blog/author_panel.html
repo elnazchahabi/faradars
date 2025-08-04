@@ -1,0 +1,18 @@
+{% extends 'base.html' %}\{% block title %}داشبورد نویسنده{% endblock %}\{% block content %}
+<div class="container my-4">
+  <h2>داشبورد شما</h2>
+  <table class="table mt-3">
+    <thead><tr><th>عنوان</th><th>وضعیت</th><th>تاریخ انتشار</th><th>اقدامات</th></tr></thead>
+    <tbody>
+      {% for post in posts %}
+        <tr>
+          <td><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></td>
+          <td>{{ post.get_status_display }}</td>
+          <td>{{ post.published_date|date:"Y/m/d" }}</td>
+          <td><a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-sm btn-secondary">مشاهده</a></td>
+        </tr>
+      {% empty %}<tr><td colspan="4">هیچ پستی یافت نشد.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

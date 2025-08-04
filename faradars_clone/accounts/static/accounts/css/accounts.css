@@ -1,0 +1,423 @@
+/* ==== پایه ==== */
+body {
+  background: #f4f6fb;
+  font-family: Vazirmatn, Tahoma, sans-serif;
+  color: #182848;
+  direction: rtl;
+}
+
+/* ==== کارت اصلی فرم‌ها ==== */
+.card-accounts {
+  max-width: 480px;
+  margin: 80px auto;
+  padding: 30px 25px;
+  border-radius: 14px;
+  background-color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  border: 1px solid #e0e0e0;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.card-accounts h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #2196f3;
+}
+
+.card-accounts p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #555;
+}
+
+.card-accounts p.hint {
+  font-size: 14px;
+  color: #777;
+  margin: 15px 0 20px;
+}
+
+/* ==== فرم‌ها ==== */
+.account-form,
+.profile-form {
+  text-align: right;
+}
+
+.account-form label,
+.profile-form label {
+  color: #2463a7;
+  margin-bottom: 0.4rem;
+  display: block;
+  font-weight: 500;
+  font-size: 1.05em;
+}
+
+.account-form input,
+.account-form select,
+.account-form textarea,
+.profile-form input,
+.profile-form select,
+.profile-form textarea {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #2463a7;
+  font-size: 1.05em;
+  background: #f6faff;
+  color: #182848;
+  transition: border-color 0.18s;
+  font-family: inherit;
+}
+
+.account-form input:focus,
+.profile-form input:focus,
+.profile-form textarea:focus {
+  outline: 2px solid #2463a7;
+  border-color: #90caf9;
+}
+
+/* چک‌باکس‌ها */
+.account-form .form-check,
+.profile-form .form-check {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  margin-bottom: 1.1rem;
+}
+
+.account-form input[type="checkbox"],
+.profile-form input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #2463a7;
+}
+
+/* ==== دکمه‌ها ==== */
+.btn-accounts {
+  background: linear-gradient(90deg, #2463a7, #182848);
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: block;
+  width: auto;
+  box-shadow: 0 2px 10px #18284813;
+}
+
+.btn-accounts:hover {
+  background: linear-gradient(90deg, #182848, #2463a7);
+}
+
+.danger-btn {
+  background: #e53935 !important;
+  color: #fff !important;
+}
+
+/* ==== پیوند پایین فرم ==== */
+.account-footer {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+
+.account-footer a {
+  color: #2196f3;
+  text-decoration: none;
+  margin-right: 5px;
+}
+
+.account-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ==== جدول سفارشی (مثلاً داشبورد) ==== */
+.custom-table {
+  width: 100%;
+  background: #fff;
+  color: #222;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 8px #0001;
+  margin-bottom: 2rem;
+}
+
+.custom-table thead {
+  background: #2463a7;
+  color: #fff;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 0.75rem;
+  text-align: center;
+  border-bottom: 1px solid #e3e7ef;
+}
+
+.custom-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ==== فرم پروفایل دو ستونه ==== */
+.profile-form .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 1.1rem;
+}
+
+.profile-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.profile-form .col-half {
+  width: 48%;
+}
+
+.profile-form .col-full {
+  width: 100%;
+}
+
+/* ==== آواتار پروفایل و نویگیشن ==== */
+.profile-avatar,
+.nav-avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-avatar {
+  width: 88px;
+  height: 88px;
+  border: 3px solid #90caf9;
+  margin: 0 auto 18px auto;
+  display: block;
+}
+
+.nav-avatar {
+  width: 36px;
+  height: 36px;
+  margin: 0 10px;
+  border: 2px solid #90caf9;
+}
+
+/* ==== پیام‌ها و alertها ==== */
+.alert,
+.messages .alert {
+  background: #2463a7;
+  color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.alert-success {
+  background: #43a047;
+}
+
+.alert-info {
+  background: #0288d1;
+}
+
+.alert-warning {
+  background: #ffa000;
+  color: #182848;
+}
+
+.alert-danger {
+  background: #e53935;
+}
+
+/* ==== فوتر سایت ==== */
+.site-footer {
+  background: #182848;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 3rem;
+}
+
+/* ==== لینک‌های فرم ورود و ثبت‌نام ==== */
+.login-links {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.99em;
+}
+
+.login-links a {
+  color: #2463a7;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.login-links a:hover {
+  color: #00346b;
+  text-decoration: none;
+}
+
+/* ==== ریسپانسیو ==== */
+@media (max-width: 700px) {
+  .profile-form .col-half,
+  .profile-form .col-full {
+    width: 100%;
+  }
+  .profile-form .form-row {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .card-accounts,
+  .dashboard-container {
+    padding: 1rem;
+    max-width: 98vw;
+  }
+
+  .custom-table,
+  .custom-table th,
+  .custom-table td {
+    font-size: 0.97em;
+  }
+}
+
+
+
+.purchased-courses {
+  list-style: none;
+  padding: 0;
+}
+
+.purchased-course-item {
+  margin-bottom: 25px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.progress-bar-container {
+  margin-top: 8px;
+  height: 22px;
+  background-color: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #0d47a1;
+  color: white;
+  text-align: center;
+  font-size: 13px;
+  line-height: 22px;
+  transition: width 0.4s ease;
+}
+
+
+
+
+.wallet-section {
+  background-color: #0d47a1; /* سورمه‌ای تیره */
+  color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(13, 71, 161, 0.4);
+}
+
+.wallet-section h3 {
+  margin-bottom: 1rem;
+  color: #90caf9; /* آبی روشن */
+}
+
+.wallet-section p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.wallet-btn {
+  background-color: #1976d2; /* آبی */
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.wallet-btn:hover {
+  background-color: #1565c0; /* آبی تیره‌تر */
+}
+
+
+
+
+
+.wallet-charge-container {
+  background-color: #0d47a1;
+  color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 12px rgba(13, 71, 161, 0.4);
+  text-align: center;
+}
+
+.wallet-charge-container h2 {
+  color: #90caf9;
+  margin-bottom: 1.5rem;
+}
+
+.wallet-balance {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.wallet-charge-form {
+  margin-bottom: 1.5rem;
+}
+
+.wallet-charge-form input {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: none;
+  width: 80%;
+  max-width: 300px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.wallet-btn {
+  background-color: #1976d2;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.wallet-btn:hover {
+  background-color: #1565c0;
+}
+
+.wallet-back-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #90caf9;
+  text-decoration: underline;
+  font-size: 0.95rem;
+}

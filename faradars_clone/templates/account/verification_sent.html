@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}تأیید ایمیل{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'accounts/css/account.css' %}">
+
+<div class="card-accounts">
+  <h2>لینک فعال‌سازی ایمیل ارسال شد</h2>
+  <p>
+    یک ایمیل حاوی لینک فعال‌سازی به <strong>{{ email }}</strong> ارسال شد.<br>
+    برای تکمیل ثبت‌نام روی لینک موجود در ایمیل کلیک کنید.
+  </p>
+  <p class="hint">
+    اگر ایمیلی دریافت نکردید، لطفاً پوشه Spam را هم بررسی کنید.
+  </p>
+</div>
+{% endblock %}

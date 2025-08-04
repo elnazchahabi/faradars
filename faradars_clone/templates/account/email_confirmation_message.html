@@ -1,0 +1,32 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تأیید ایمیل حساب کاربری</title>
+</head>
+<body style="background:#f4f6fb; font-family:Tahoma, Vazirmatn, sans-serif; color:#182848; direction:rtl; margin:0; padding:0;">
+  <div style="background:#182848; color:#fff; padding:22px 10px; text-align:center; border-radius:0 0 24px 24px;">
+    <h2 style="margin:0; font-size:1.3em; letter-spacing:1px;">تأیید حساب کاربری فرادرس کلون</h2>
+  </div>
+  <div style="max-width:470px; margin:25px auto 0 auto; background:#fff; border-radius:14px; box-shadow:0 4px 22px #18284814; padding:36px 20px 24px 20px;">
+    <p style="font-size:1.14em; margin-bottom:18px;">
+      سلام <b>{{ user.get_full_name|default:user.username }}</b> عزیز
+    </p>
+    <p style="font-size:1.04em;">
+      برای فعال‌سازی حساب کاربری روی لینک زیر کلیک کنید:
+    </p>
+    <p style="text-align:center; margin:22px 0;">
+      <a href="{{ activate_url }}" style="background:#2463a7; color:#fff; text-decoration:none; font-size:1.07em; border-radius:8px; padding:10px 34px; display:inline-block; font-weight:bold;">
+        فعال‌سازی حساب کاربری
+      </a>
+    </p>
+    <p style="font-size:0.99em; color:#888; margin:24px 0 0 0;">
+      اگر شما ثبت‌نام نکردید، این پیام را نادیده بگیرید.
+    </p>
+    <div style="font-size:0.9em; color:#b2b2b2; margin-top:30px; text-align:center;">
+      با احترام، تیم توسعه فرادرس کلون
+    </div>
+  </div>
+</body>
+</html>

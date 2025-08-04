@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'instructors/css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="instructor-profile">
+  <div style="display:flex;align-items:center;gap:2rem;">
+    {% if instructor.avatar %}
+      <img src="{{ instructor.avatar.url }}"
+           alt="آواتار مدرس"
+           style="width:120px;border-radius:100px;">
+    {% endif %}
+    <div>
+      <h2>{{ instructor.user.get_full_name|default:instructor.user.username }}</h2>
+      <p style="color:#56aaff;">{{ instructor.bio }}</p>
+      {% if instructor.linkedin %}
+        <a href="{{ instructor.linkedin }}" target="_blank">LinkedIn</a>
+      {% endif %}
+      {% if instructor.website %}
+        · <a href="{{ instructor.website }}" target="_blank">سایت شخصی</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <hr>
+  <h3>دوره‌های مدرس:</h3>
+  <ul>
+    {% for course in courses %}
+      <li>
+        <a href="{% url 'courses:course_detail' course.slug %}">
+          {{ course.title }}
+        </a>
+        <small class="text-muted">({{ course.category }})</small>
+      </li>
+    {% empty %}
+      <li>هنوز دوره‌ای ثبت نکرده است.</li>
+    {% endfor %}
+  </ul>
+
+  <!-- بخش افزوده: پست‌های مدرس -->
+  <hr>
+  <h3 class="mt-4">پست‌های مدرس:</h3>
+  <ul>
+    {% for post in posts %}
+      <li>
+        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        <small class="text-muted">— {{ post.published_date|date:"Y/m/d" }}</small>
+      </li>
+    {% empty %}
+      <li>این مدرس هنوز پستی منتشر نکرده است.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

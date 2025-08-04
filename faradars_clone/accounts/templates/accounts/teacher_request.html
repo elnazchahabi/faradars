@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}درخواست مدرس شدن{% endblock %}
+
+{% block content %}
+<div class="card-accounts">
+  <h2>درخواست مدرس شدن</h2>
+  <form method="post" class="account-form">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn-accounts">ثبت درخواست</button>
+  </form>
+</div>
+{% endblock %}

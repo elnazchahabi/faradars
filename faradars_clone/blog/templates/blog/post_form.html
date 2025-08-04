@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container pt-5">
+  <div class="card bg-dark mb-4">
+    <div class="card-body">
+      <h4 style="color:#3a71c1;">{% if form.instance.pk %}ویرایش{% else %}افزودن{% endif %} پست</h4>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary mt-2" style="background:#284b7e;">ثبت</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

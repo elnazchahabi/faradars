@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'orders/style.css' %}">
+{% endblock %}
+{% block content %}
+<div class="orders-list-container">
+    <h2 class="orders-title">لیست سفارشات من</h2>
+    <table class="orders-table">
+        <thead>
+            <tr>
+                <th>شماره سفارش</th>
+                <th>تاریخ</th>
+                <th>وضعیت</th>
+                <th>مبلغ کل</th>
+                <th>جزییات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.created_at|date:"Y/m/d H:i" }}</td>
+                <td>
+                    {% if order.is_paid %}
+                        <span class="orders-status-paid">پرداخت شده</span>
+                    {% else %}
+                        <span class="orders-status-unpaid">پرداخت نشده</span>
+                    {% endif %}
+                </td>
+                <td>{{ order.total_price|default:'-' }}</td>
+                <td>
+                    <a href="{% url 'orders:order_detail' order.id %}" class="orders-link">نمایش</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="orders-empty">سفارشی ثبت نشده.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

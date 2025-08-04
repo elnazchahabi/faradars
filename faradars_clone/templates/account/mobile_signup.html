@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}ورود با شماره موبایل{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'accounts/css/account.css' %}">
+
+<form method="post" class="account-form card-accounts form-narrow">
+  {% csrf_token %}
+  <h2>ورود / ثبت‌نام</h2>
+  <label for="id_mobile">شماره موبایل:</label>
+  {{ form.mobile }}
+  <button type="submit" class="btn-accounts">ارسال کد تأیید</button>
+</form>
+{% endblock %}

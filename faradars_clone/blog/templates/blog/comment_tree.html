@@ -1,0 +1,29 @@
+{% for comment in comments %}
+  <div style="margin-bottom:1.1rem; margin-right:{% if comment.parent %}30{% else %}0{% endif %}px; padding:.8rem 1rem; background:#2d4263; border-radius:.7rem;">
+    <b style="color:#fca311;">
+      {% if comment.user %}
+        {{ comment.user.get_full_name|default:comment.user.username }}
+      {% else %}
+        کاربر حذف‌شده
+      {% endif %}
+    </b>
+    <span style="color:#9eb8e4;font-size:.85rem;">{{ comment.created_at|date:"Y/m/d H:i" }}</span>
+    <div style="margin:.6rem 0 0 0;">{{ comment.content }}</div>
+    {% if user.is_authenticated %}
+      <form method="post" action="{% url 'blog:add-comment' comment.post.slug %}" style="margin-top:.5rem;">
+        {% csrf_token %}
+        <input type="hidden" name="parent" value="{{ comment.id }}">
+        <textarea name="content" rows="1" placeholder="پاسخ..." style="margin-bottom:.5rem;"></textarea>
+        <button class="btn-main" style="padding:.3rem 1rem;">ارسال پاسخ</button>
+      </form>
+    {% endif %}
+    {% if comment.replies.exists %}
+      <div style="margin-top:1rem; margin-right:15px;">
+        {% include "blog/comment_tree.html" with comments=comment.replies.all %}
+      </div>
+    {% endif %}
+  </div>
+{% empty %}
+  <div style="color:#ffd166;">فعلاً نظری ثبت نشده.</div>
+{% endfor %}
+

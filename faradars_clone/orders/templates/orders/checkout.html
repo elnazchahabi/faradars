@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'orders/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="orders-cart-container">
+    <h2 class="orders-title">تأیید و پرداخت سفارش</h2>
+
+    <table class="orders-table">
+        <thead>
+            <tr>
+                <th>عنوان</th>
+                <th>نوع</th>
+                <th>مبلغ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>
+                    {% if item.get_type == 'course' %}
+                        <a href="{% url 'courses:course_detail' item.item_object.slug %}">
+                            {{ item.item_object.title }}
+                        </a>
+                    {% elif item.get_type == 'product' %}
+                        <a href="{% url 'store:product_detail' item.item_object.slug %}">
+                            {{ item.item_object.title }}
+                        </a>
+                    {% else %}
+                        {{ item.item_object.title }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if item.get_type == 'course' %}دوره{% elif item.get_type == 'product' %}محصول{% else %}-{% endif %}
+                </td>
+                <td>{{ item.price }} تومان</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="orders-total">
+        مبلغ کل: <strong>{{ order.total_price }}</strong> تومان
+    </div>
+
+    <div class="checkout-form-wrapper">
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-success">ادامه و بررسی سفارش</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

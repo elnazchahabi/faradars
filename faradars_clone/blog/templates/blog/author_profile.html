@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container my-4">
+    <h2>پروفایل {{ author.get_full_name|default:author.username }}</h2>
+
+    {% if bio %}
+      <p><strong>بیوگرافی:</strong> {{ bio }}</p>
+    {% endif %}
+
+    <h4>پست‌های منتشرشده</h4>
+    {% if posts %}
+      <ul class="list-group">
+        {% for post in posts %}
+          <li class="list-group-item">
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            <span class="text-muted small">({{ post.published_date|date:"Y/m/d" }})</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>این نویسنده هنوز پستی منتشر نکرده.</p>
+    {% endif %}
+  </div>
+{% endblock %}

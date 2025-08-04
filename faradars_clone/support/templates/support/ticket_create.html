@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'support/css/support.css' %}">
+<div class="ticket-container">
+    <h2 class="ticket-list-header">ارسال تیکت پشتیبانی</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ ticket_form.subject }}
+        {{ message_form.message }}
+        <button type="submit" class="btn-accounts">ارسال</button>
+    </form>
+</div>
+{% endblock %}
+
+

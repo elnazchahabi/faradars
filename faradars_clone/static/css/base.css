@@ -1,0 +1,53 @@
+body {
+  background: #f4f6fb;
+  font-family: Vazirmatn, Tahoma, sans-serif;
+  color: #222;
+  direction: rtl;
+}
+.site-header {
+  background: linear-gradient(90deg, #2463a7, #182848);
+  color: #fff;
+  padding: 1.2rem 0;
+  box-shadow: 0 2px 12px #0001;
+}
+.logo { font-size: 1.4rem; font-weight: bold; color: #fff; text-decoration: none; }
+.container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+.site-footer { background: #182848; color: #fff; text-align: center; padding: 1rem 0; margin-top: 3rem; }
+.messages .alert { background: #2463a7; color: #fff; border-radius: 8px; padding: 1rem; margin: 1rem 0; }
+
+
+
+
+/* ============================= */
+/* استایل لینک‌های سفارشات در ناوبار */
+/* ============================= */
+.nav-links .order-link {
+  margin-left: 1rem;          /* فاصله از لینک قبلی */
+  padding: 0.4em 0.8em;       /* فضا درون دکمه */
+  background-color: #1976d2;  /* رنگ پس‌زمینه */
+  color: #ffffff;             /* رنگ متن */
+  text-decoration: none;      /* حذف خط زیر متون */
+  border-radius: 0.25rem;     /* گوشه‌های گرد */
+  font-weight: 500;           /* کمی ضخیم‌تر */
+  transition: background .2s; /* انیمیشن ملایم هاور */
+}
+
+.nav-links .order-link:hover {
+  background-color: #006416;  /* رنگ پس‌زمینه در حالت هاور */
+}
+
+
+
+
+
+.social-icons a {
+  font-size: 24px; /* یا 1.5rem */
+  margin: 0 10px;
+  color: #fff;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #90caf9;
+  transform: scale(1.2);
+}

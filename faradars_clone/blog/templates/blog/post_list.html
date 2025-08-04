@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}لیست پست‌ها{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <div class="row">
+    <!-- سایدبار -->
+    <aside class="col-md-3">
+      <div class="card sidebar-card mb-4">
+        <div class="card-body p-3">
+          <div class="widget">
+            <h5 class="widget-title">جستجو</h5>
+            <form method="get">
+              <div class="input-group mb-2">
+                <input type="text" name="q" class="form-control" placeholder="جستجو..." value="{{ request.GET.q }}">
+                <button class="btn btn-primary" type="submit">🔍</button>
+              </div>
+              <h6 class="mt-3">سطح</h6>
+              {% for lvl, name in LEVEL_CHOICES %}
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="level" id="level_{{ lvl }}" value="{{ lvl }}" {% if request.GET.level == lvl %}checked{% endif %}>
+                  <label class="form-check-label" for="level_{{ lvl }}">{{ name }}</label>
+                </div>
+              {% endfor %}
+              <button type="submit" class="btn btn-primary btn-sm mt-2">اعمال</button>
+            </form>
+          </div>
+          <hr>
+          <div class="widget">
+            <h5 class="widget-title">آرشیو</h5>
+            <ul class="list-unstyled mb-0">
+              {% for date in archive_dates %}
+                <li class="mb-1"><a href="{% url 'blog:post_archive' date.year date.month %}">{{ date|date:"F Y" }}</a></li>
+              {% empty %}<li>آرشیوی یافت نشد.</li>{% endfor %}
+            </ul>
+          </div>
+          <hr>
+          <div class="widget">
+            <h5 class="widget-title">دسته‌ها</h5>
+            <ul class="list-unstyled mb-0">
+              {% for cat in categories %}
+                <li class="mb-1"><a href="{{ cat.get_absolute_url }}">{{ cat.name }} <span class="badge bg-info">{{ cat.posts.count }}</span></a></li>
+              {% empty %}<li>هیچ دسته‌ای وجود ندارد.</li>{% endfor %}
+            </ul>
+          </div>
+          <hr>
+          <div class="widget mb-0">
+            <h5 class="widget-title">تگ‌ها</h5>
+            <div class="tag-cloud">
+              {% for tag in tags %}<a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>{% empty %}<p>هنوز تگی ثبت نشده.</p>{% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <!-- لیست پست‌ها -->
+    <section class="col-md-9">
+      {% for post in page_obj %}
+        <div class="card mb-4">
+          <div class="row g-0">
+            {% if post.thumbnail %}
+              <div class="col-md-4"><img src="{{ post.thumbnail.url }}" class="img-fluid rounded-start" alt="{{ post.title }}"></div>
+              <div class="col-md-8">
+            {% else %}<div class="col-12">{% endif %}
+              <div class="card-body">
+                <h5 class="card-title"><a href="{{ post.get_absolute_url }}" class="text-decoration-none">{{ post.title }}</a></h5>
+                <p class="card-text">{{ post.excerpt|default:post.content|truncatechars:200 }}</p>
+                <p class="card-text"><small class="text-muted">توسط {{ post.author.username|default:"مهمان" }} | {{ post.published_date|date:"Y/m/d" }} | سطح: {{ post.get_level_display }}</small></p>
+                <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-sm">ادامه مطلب</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}<p>هیچ پستی یافت نشد.</p>{% endfor %}
+
+      {% if page_obj.has_other_pages %}
+        <nav aria-label="صفحه‌بندی">
+          <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+              <li class="page-item"><a class="page-link" href="?{% if request.GET.q %}q={{ request.GET.q }}&amp;{% endif %}{% if request.GET.level %}level={{ request.GET.level }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% endif %}
+            {% for i in page_obj.paginator.page_range %}
+              {% if page_obj.number == i %}<li class="page-item active"><span class="page-link">{{ i }}</span></li>{% else %}<li class="page-item"><a class="page-link" href="?{% if request.GET.q %}q={{ request.GET.q }}&amp;{% endif %}{% if request.GET.level %}level={{ request.GET.level }}&amp;{% endif %}page={{ i }}">{{ i }}</a></li>{% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+              <li class="page-item"><a class="page-link" href="?{% if request.GET.q %}q={{ request.GET.q }}&amp;{% endif %}{% if request.GET.level %}level={{ request.GET.level }}&amp;{% endif %}page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}

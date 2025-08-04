@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'courses/css/style.css' %}">
+<div class="courses-container">
+  <h2 class="main-title">دسته‌بندی‌های سایت</h2>
+  <div class="categories-list">
+    {% for cat in categories %}
+      <a href="{% url 'courses:category_courses' cat.slug %}" class="category-card">
+        {{ cat.title }}
+        {% if cat.description %}
+          <div style="font-size: .95rem; color: #7fc3ff; margin-top:.5rem;">{{ cat.description }}</div>
+        {% endif %}
+      </a>
+    {% empty %}
+      <div class="empty-message">هیچ دسته‌بندی‌ای ثبت نشده.</div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+

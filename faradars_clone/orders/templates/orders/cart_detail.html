@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'orders/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="orders-cart-container">
+  <h2 class="orders-title">سبد خرید شما</h2>
+
+  {% if items %}
+  <table class="orders-table">
+    <thead>
+      <tr>
+        <th>عنوان</th>
+        <th>نوع</th>
+        <th>قیمت</th>
+        <th>حذف</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>
+          {% if item.get_type == 'course' %}
+            <a href="{% url 'courses:course_detail' item.item_object.slug %}">
+              {{ item.item_object.title }}
+            </a>
+          {% elif item.get_type == 'product' %}
+            <a href="{% url 'store:product_detail' item.item_object.slug %}">
+              {{ item.item_object.title }}
+            </a>
+          {% else %}
+            {{ item.item_object.title }}
+          {% endif %}
+        </td>
+        <td>
+          {% if item.get_type == 'course' %}
+            دوره آموزشی
+          {% elif item.get_type == 'product' %}
+            محصول
+          {% else %}
+            -
+          {% endif %}
+        </td>
+        <td>{{ item.price }} تومان</td>
+        <td>
+          <a href="{% url 'orders:remove_from_cart' item.id %}" class="orders-btn orders-btn-delete">❌ حذف</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="orders-total">
+    مبلغ کل: <strong>{{ order.total_price }}</strong> تومان
+  </div>
+
+  <div class="orders-actions">
+    <a href="{% url 'orders:checkout' %}" class="orders-btn">ادامه به پرداخت</a>
+  </div>
+
+  {% else %}
+  <div class="orders-empty">سبد خرید شما خالی است.</div>
+  {% endif %}
+</div>
+{% endblock %}
+

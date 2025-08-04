@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}ویرایش پروفایل{% endblock %}
+
+{% block content %}
+<div class="card-accounts" style="max-width:600px;">
+  <h2 style="text-align:center; color:#90caf9;">ویرایش پروفایل</h2>
+  <div style="text-align:center;">
+    {% if user.profile_image %}
+      <img src="{{ user.profile_image.url }}" alt="آواتار" class="profile-avatar" id="currentAvatar">
+    {% else %}
+      <img src="{% static 'accounts/img/default_avatar.png' %}" alt="بدون عکس" class="profile-avatar" id="currentAvatar">
+    {% endif %}
+  </div>
+
+  <form method="post" enctype="multipart/form-data" class="account-form profile-form">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-half">{{ form.first_name.label_tag }}{{ form.first_name }}</div>
+      <div class="form-group col-half">{{ form.last_name.label_tag }}{{ form.last_name }}</div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-half">{{ form.email.label_tag }}{{ form.email }}</div>
+      <div class="form-group col-half">{{ form.mobile.label_tag }}{{ form.mobile }}</div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-full">{{ form.profile_image.label_tag }}{{ form.profile_image }}</div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-full">{{ form.bio.label_tag }}{{ form.bio }}</div>
+    </div>
+    <button type="submit" class="btn-accounts">بروزرسانی</button>
+  </form>
+
+  <a href="{% url 'password_change' %}" class="btn-accounts" style="display:block; max-width:220px; margin:1.5rem auto;">تغییر رمز عبور</a>
+
+  <form method="post" action="{% url 'deactivate_account' %}" onsubmit="return confirm('آیا مطمئن هستید؟ این عملیات قابل بازگشت نیست.')" style="margin-top:1.5rem;">
+      {% csrf_token %}
+      <button type="submit" class="btn-accounts danger-btn">درخواست حذف حساب کاربری</button>
+  </form>
+</div>
+{% endblock %}

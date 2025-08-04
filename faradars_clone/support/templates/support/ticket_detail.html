@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'support/css/support.css' %}">
+<div class="ticket-container">
+    <div class="ticket-header-flex">
+        <h2 class="ticket-title">تیکت: {{ ticket.subject }}</h2>
+        <div class="ticket-status">وضعیت: {{ ticket.get_status_display }}</div>
+    </div>
+
+    <div id="ticket-messages" class="ticket-messages">
+        <div id="messages-loading" style="text-align:center;color:gray;">در حال بارگذاری...</div>
+    </div>
+
+    {% if ticket.status != "closed" %}
+    <form id="send-message-form" class="message-form-flex" method="post" autocomplete="off">
+        {% csrf_token %}
+        {{ form.message }}
+        <button type="submit" class="send-button">ارسال پیام</button>
+    </form>
+    {% else %}
+        <div class="closed-ticket-alert">این تیکت بسته شده و امکان ارسال پیام جدید وجود ندارد.</div>
+    {% endif %}
+    <a href="{% url 'ticket_list' %}" class="btn-accounts return-btn">بازگشت</a>
+</div>
+
+<script>
+    let ticket_id = "{{ ticket.pk }}";
+    function fetchMessages(scroll = false) {
+        fetch("{% url 'ticket_messages_api' ticket.pk %}")
+        .then(response => response.json())
+        .then(data => {
+            let box = document.getElementById("ticket-messages");
+            if (data.messages.length === 0) {
+                box.innerHTML = "<p style='text-align:center'>هنوز پیامی ارسال نشده است.</p>";
+                return;
+            }
+            box.innerHTML = "";
+            data.messages.forEach(function(msg) {
+                let row = document.createElement('div');
+                row.className = "message-row " + (msg.is_staff ? "admin-row" : "user-row");
+                row.innerHTML = `
+                    <div class="message-bubble ${msg.is_staff ? "message-admin" : "message-user"}">
+                        <div class="sender-name">${msg.sender}</div>
+                        <div class="message-text">${msg.message.replace(/\n/g,'<br>')}</div>
+                        <div class="message-meta">${msg.created_at}</div>
+                    </div>
+                `;
+                box.appendChild(row);
+            });
+            if (scroll) box.scrollTop = box.scrollHeight;
+        });
+    }
+    fetchMessages(true);
+    setInterval(fetchMessages, 5000);
+
+    document.getElementById('send-message-form')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        let form = e.target;
+        let msg_input = form.querySelector('textarea');
+        let msg = msg_input.value.trim();
+        if (!msg) return;
+        let csrf = form.querySelector('[name="csrfmiddlewaretoken"]').value;
+        fetch("{% url 'ticket_send_message' ticket.pk %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrf,
+                "X-Requested-With": "XMLHttpRequest",
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `message=${encodeURIComponent(msg)}`
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.message) {
+                msg_input.value = '';
+                fetchMessages(true);
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}فرادرس{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+  <link rel="stylesheet" href="{% static 'orders/style.css' %}">
+  <link rel="stylesheet" href="{% static 'store/style.css' %}">
+  <link rel="alternate" type="application/rss+xml" title="RSS بلاگ" href="{% url 'blog:post_feed' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <header class="site-header">
+<nav class="nav-links">
+  <a href="/" class="logo">فرادرس کلون</a>
+  <a href="{% url 'blog:post_list' %}"       class="order-link">بلاگ</a>
+  <a href="{% url 'courses:course_list' %}"       class="order-link">دوره ها</a>
+  <a href="{% url 'courses:all_categories' %}" class="order-link">دسته‌بندی‌ها</a>
+  <a href="{% url 'store:product_list' %}"       class="order-link">فروشگاه</a>
+
+
+  {# سه لینک سفارشات #}
+  <a href="{% url 'orders:cart_detail' %}" class="order-link">سبد خرید</a>
+  <a href="{% url 'orders:order_list' %}" class="order-link">تاریخچهٔ سفارش‌ها</a>
+  <a href="{% url 'orders:checkout' %}" class="order-link">پرداخت</a>
+</nav>
+
+      {% if user.is_authenticated %}
+        <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'accounts/img/default_avatar.png' %}{% endif %}" alt="آواتار" class="nav-avatar">
+        <a href="{% url 'dashboard' %}" class="btn-accounts">داشبورد</a>
+        <a href="{% url 'profile' %}" class="btn-accounts">پروفایل</a>
+
+
+
+
+        <!-- فقط ادمین: لینک مدیریت تیکت -->
+        {% if user.is_staff %}
+          <a href="{% url 'admin_ticket_list' %}" class="btn-accounts" style="background:#119e69;">مدیریت تیکت‌ها</a>
+        {% endif %}
+        <form method="post" action="{% url 'account_logout' %}" class="logout-form" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn-accounts">خروج</button>
+        </form>
+      {% else %}
+        <a href="{% url 'account_signup' %}">ثبت‌نام</a>
+        <a href="{% url 'account_login' %}">ورود</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  {% if messages %}
+    <div class="container mt-3">
+      {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <main class="main-content py-4">
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+<footer class="site-footer">
+  <div class="social-icons">
+    <a href="https://wa.me/989123456789" target="_blank" title="واتساپ">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://instagram.com/yourpage" target="_blank" title="اینستاگرام">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://t.me/yourchannel" target="_blank" title="تلگرام">
+      <i class="fab fa-telegram"></i>
+    </a>
+  </div>
+</footer>
+
+
+    <p>تمام حقوق محفوظ است © {% now "Y" %}</p>
+  </footer>
+ <!-- اسکریپت اشتراک‌گذاری اجتماعی -->
+  <script>
+    function shareOn(platform) {
+      const url = encodeURIComponent(window.location.href);
+      const title = encodeURIComponent(document.title);
+      let shareUrl = '';
+      if (platform === 'telegram') {
+        shareUrl = `https://t.me/share/url?url=${url}&text=${title}`;
+      } else if (platform === 'twitter') {
+        shareUrl = `https://twitter.com/intent/tweet?text=${title}&url=${url}`;
+      } else if (platform === 'linkedin') {
+        shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`;
+      }
+      window.open(shareUrl, '_blank');
+    }
+  </script>
+  <!-- csrf برای ajax -->
+  <script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+  </script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

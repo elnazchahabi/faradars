@@ -1,0 +1,41 @@
+<!-- فایل دوم: product_detail.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<a href="{% url 'store:add_to_compare' product.id %}" class="btn-compare">افزودن به مقایسه</a>
+
+<div class="product-detail-box">
+  <img src="{{ product.image.url }}" class="product-detail-img">
+  <div class="product-detail-info">
+    <h2>{{ product.title }}</h2>
+    <p>{{ product.description }}</p>
+    <p><strong>قیمت:</strong> {{ product.price }} تومان</p>
+    <p><strong>نوع محصول:</strong> {{ product.is_digital|yesno:"دیجیتال,کاغذی" }}</p>
+
+    <p><strong>دسته‌بندی:</strong> {{ product.category }}</p>
+    <p><strong>تگ‌ها:</strong>
+      {% for tag in product.tags.all %}
+        <a href="?tag={{ tag.name }}" class="tag">{{ tag.name }}</a>
+      {% endfor %}
+    </p>
+    <a href="{% url 'orders:add_to_cart' 'product' product.id %}" class="btn-buy">افزودن به سبد خرید</a>
+  </div>
+</div>
+<hr>
+<div class="similar-products">
+  <h4>محصولات مشابه:</h4>
+  <div class="similar-scroll">
+    {% for sim in similar %}
+      <div class="similar-card">
+        <a href="{% url 'store:product_detail' sim.slug %}">
+          <img src="{{ sim.image.url }}" alt="{{ sim.title }}">
+          <p>{{ sim.title }}</p>
+          <small>{{ sim.price }} تومان</small>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

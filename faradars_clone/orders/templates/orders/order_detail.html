@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load order_extras %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'orders/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="orders-detail-container">
+    <h2 class="orders-title">جزئیات سفارش #{{ order.id }}</h2>
+
+    <div class="orders-meta">
+        <p><strong>تاریخ ثبت:</strong> {{ order.created_at|date:"Y/m/d - H:i" }}</p>
+        <p><strong>نام مشتری:</strong> {{ order.full_name }}</p>
+        <p><strong>شماره موبایل:</strong> {{ order.mobile }}</p>
+        {% if order.phone %}
+            <p><strong>تلفن ثابت:</strong> {{ order.phone }}</p>
+        {% endif %}
+        <p><strong>استان:</strong> {{ order.province }}</p>
+        <p><strong>شهر:</strong> {{ order.city }}</p>
+        <p><strong>کد پستی:</strong> {{ order.postal_code }}</p>
+        {% if order.address %}
+            <p><strong>آدرس:</strong> {{ order.address }}</p>
+        {% endif %}
+        {% if order.note %}
+            <p><strong>یادداشت:</strong> {{ order.note }}</p>
+        {% endif %}
+        <p><strong>نوع ارسال:</strong> {{ order.get_delivery_type_display }}</p>
+        {% if order.delivery_time %}
+            <p><strong>زمان‌بندی ارسال:</strong> {{ order.delivery_time }}</p>
+        {% endif %}
+        {% if order.payment_ref %}
+            <p><strong>شماره پیگیری پرداخت:</strong> {{ order.payment_ref }}</p>
+        {% endif %}
+    </div>
+
+    <hr>
+
+    <table class="orders-table">
+        <thead>
+            <tr>
+                <th>عنوان محصول</th>
+                <th>نوع</th>
+                <th>تعداد</th>
+                <th>قیمت واحد</th>
+                <th>جمع کل</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.item_object }}</td>
+                <td>{{ item.get_type }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price|intcomma }} تومان</td>
+                <td>{{ item.price|multiply:item.quantity|intcomma }} تومان</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="orders-total">
+        مبلغ نهایی: <strong>{{ order.total_price|intcomma }}</strong> تومان
+    </div>
+
+    <div class="orders-status-box">
+        وضعیت:
+        {% if order.is_paid %}
+            <span class="orders-status-paid">پرداخت شده</span>
+        {% else %}
+            <span class="orders-status-unpaid">پرداخت نشده</span>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

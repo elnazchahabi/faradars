@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% load static %}
+{% block title %}داشبورد{% endblock %}
+{% block content %}
+<div class="dashboard-container card-accounts">
+  <h2 style="text-align:center; color:#90caf9; margin-bottom:1.5rem;">خوش‌آمدی، {{ user.username }}!</h2>
+  <p style="text-align:center;">اینجا می‌تونی وضعیت حساب و فعالیت‌هات رو ببینی.</p>
+
+  <a href="{% url 'instructorrequest' %}" class="btn-accounts" style="display:block; max-width:220px; margin:2rem auto;">درخواست مدرس شدن</a>
+
+  {% if is_instructor %}
+    <div class="alert alert-success">شما مدرس تایید شده هستید!</div>
+  {% elif instructor_request %}
+      {% if instructor_request.is_approved %}
+        <div class="alert alert-info">درخواست شما برای مدرس شدن تایید شد. لطفاً یک بار خارج و مجدداً وارد شوید.</div>
+      {% elif instructor_request.is_rejected %}
+        <div class="alert alert-danger">درخواست شما برای مدرس شدن رد شد.</div>
+      {% else %}
+        <div class="alert alert-warning">درخواست مدرس شدن شما در حال بررسی است.</div>
+      {% endif %}
+  {% else %}
+    <div><a href="{% url 'instructorrequest' %}">درخواست مدرس شدن ثبت کنید</a></div>
+  {% endif %}
+
+
+  <hr>
+
+<div class="wallet-section">
+  <h3>کیف پول شما</h3>
+  <p>موجودی: <strong>{{ wallet.balance|intcomma }}</strong> ریال</p>
+  <a href="{% url 'wallet_charge' %}" class="wallet-btn">شارژ کیف پول</a>
+</div>
+
+  <hr>
+
+  <h3>تاریخچه سفارش‌ها</h3>
+  {% if orders %}
+      <div class="table-responsive">
+      <table class="custom-table">
+          <thead>
+              <tr>
+                  <th>کد سفارش</th>
+                  <th>تاریخ</th>
+                  <th>وضعیت پرداخت</th>
+                  <th>مبلغ</th>
+              </tr>
+          </thead>
+          <tbody>
+          {% for order in orders %}
+              <tr>
+                  <td>{{ order.id }}</td>
+                  <td>{{ order.created_at|date:"Y/m/d H:i" }}</td>
+                  <td>{% if order.is_paid %}پرداخت شده{% else %}پرداخت نشده{% endif %}</td>
+                  <td>{{ order.total_price|default:"-" }} تومان</td>
+              </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+      </div>
+  {% else %}
+      <p>هنوز سفارشی ثبت نکردید.</p>
+  {% endif %}
+
+  <hr>
+  <a href="{% url 'ticket_list' %}" class="btn-accounts" style="display:block; max-width:220px; margin:1.5rem auto;">پشتیبانی و تیکت‌ها</a>
+
+  <h3>آخرین فعالیت‌ها</h3>
+  {% if recent_logins %}
+      <ul>
+          {% for lh in recent_logins %}
+              <li>
+                  ورود در {{ lh.login_time|date:"Y/m/d H:i" }} 
+                  از {{ lh.ip_address|default:"?" }} 
+                  ({{ lh.user_agent|slice:":30" }})
+              </li>
+          {% endfor %}
+      </ul>
+  {% else %}
+      <p>فعلاً ورود ثبت نشده.</p>
+  {% endif %}
+
+  <hr>
+  <h3>دوره‌های خریداری‌شده</h3>
+  {% if bought_courses %}
+    <ul class="purchased-courses">
+      {% for item in bought_courses %}
+        <li class="purchased-course-item">
+          {% if item.first_lesson %}
+            <a href="{% url 'lesson_detail' item.first_lesson.pk %}">{{ item.course.title }}</a>
+          {% else %}
+            {{ item.course.title }} (بدون درس)
+          {% endif %}
+  
+          <div class="progress-bar-container">
+            <div class="progress-bar" style="width: {{ item.percentage }}%;">
+              {{ item.percentage }}%
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>شما هنوز دوره‌ای خریداری نکردید.</p>
+  {% endif %}
+  
+
+
+  {% if is_instructor and instructor_courses %}
+      <hr>
+      <h3>دوره‌های مدرس‌شده توسط شما</h3>
+      <ul>
+        {% for course in instructor_courses %}
+          <li>{{ course.title }}</li>
+        {% endfor %}
+      </ul>
+  {% endif %}
+</div>
+{% endblock %}
+

@@ -1,0 +1,15 @@
+/* رنگ آبی Azure */
+:root { --az-blue: #0b3d91; --light-gray: #f5f5f5; }
+body { background: var(--light-gray); color: #333; }
+a { color: var(--az-blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.navbar { background: var(--az-blue); padding:1rem; }
+.navbar a { color:#fff; margin-right:1rem; }
+.post-list, .featured-list, .popular-list { list-style:none;padding:0; }
+.post-item { background:#fff; margin:1rem 0; padding:1rem; border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.1); }
+.post-item h2 { margin:0; color:var(--az-blue); }
+.post-meta { font-size:0.9rem; color:#666; }
+.reading-time { font-style:italic; }
+.tag-cloud a { display:inline-block; margin:0.2rem; padding:0.2rem 0.5rem; background:#e0e7ff; border-radius:4px; font-size:0.9rem; }
+.comment { background:#fff; margin:1rem 0; padding:0.5rem; border-radius:4px; }
+.share-buttons a { margin-right:0.5rem; }

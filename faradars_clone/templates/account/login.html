@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}ورود{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'accounts/css/account.css' %}">
+
+<div class="card-accounts">
+  <h2>ورود</h2>
+
+  <form method="post" class="account-form">
+    {% csrf_token %}
+
+    {# نمایش ارورهای کلی (مثلاً: نام کاربری یا رمز اشتباه است) #}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
+
+    <label for="id_login">نام کاربری یا ایمیل</label>
+    {{ form.login }}
+
+    <label for="id_password">رمز عبور</label>
+    {{ form.password }}
+
+    <div class="form-check">
+      {{ form.remember }}
+      <label for="id_remember">مرا به خاطر بسپار</label>
+    </div>
+
+    <button type="submit" class="btn-accounts">ورود</button>
+  </form>
+
+  <div class="login-links">
+    <a href="{% url 'account_reset_password' %}">فراموشی رمز عبور</a>
+    <span> | </span>
+    <a href="{% url 'account_signup' %}">ثبت‌نام</a>
+  </div>
+</div>
+{% endblock %}

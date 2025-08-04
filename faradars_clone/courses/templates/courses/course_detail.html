@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="courses-container">
+  <h2>{{ course.title }}</h2>
+  <img src="{{ course.thumbnail.url }}" width="240" style="border-radius:10px;">
+  <p>
+    دسته: 
+    {% if course.category %}
+      <a href="{% url 'courses:category_courses' course.category.slug %}">
+        {{ course.category }}
+      </a>
+    {% else %}
+      <span style="color:#888;">ثبت نشده</span>
+    {% endif %}
+    | مدرس: 
+    {% if course.instructor and course.instructor.user %}
+      <a href="{% url 'instructors:profile' course.instructor.user.username %}">
+        {{ course.instructor.get_full_name|default:course.instructor.user.username }}
+      </a>
+    {% else %}
+      <span style="color:#888;">مدرس ثبت نشده</span>
+    {% endif %}
+  </p>
+
+  <p>توضیحات: {{ course.description }}</p>
+  {% if course.price == 0 %}
+  <p class="price-free">رایگان</p>
+{% elif course.has_active_discount %}
+  <p>
+    <span class="price-original">{{ course.price }} تومان</span>
+    <span class="price-discounted">{{ course.get_final_price }} تومان</span>
+  </p>
+  <div id="discount-timer" data-expiration="{{ course.discount_expiration|date:"Y-m-d H:i:s" }}"></div>
+{% else %}
+  <p class="price-normal">{{ course.price }} تومان</p>
+{% endif %}
+
+
+  {# دکمه خرید یا پیام خریداری‌شده #}
+  {% if not has_course %}
+    <a href="{% url 'orders:add_to_cart' course.id %}" class="orders-btn">افزودن به سبد خرید</a>
+  {% else %}
+    <span class="orders-status-paid">شما این دوره را خریده‌اید</span>
+  {% endif %}
+
+  <p>میانگین امتیاز: {{ course.average_rating|floatformat:1 }} ⭐</p>
+  <hr>
+  <h3>سرفصل‌ها:</h3>
+  <ul>
+    {% for lesson in lessons %}
+      <li class="mb-2">
+       {# اگر پیش‌نمایش یا دوره خریداری‌شده یا رایگان است #}
+       {% if lesson.is_preview or has_course or course.price == 0 %}
+          <a href="{% url 'courses:lesson_detail' lesson.pk %}"
+             class="text-sky-600 hover:underline">
+            {{ lesson.order }}. {{ lesson.title }}
+            {% if lesson.is_preview %}
+              <span class="text-green-500">(پیش‌نمایش)</span>
+            {% endif %}
+          </a>
+        {% else %}
+          <span class="text-gray-500">
+            {{ lesson.order }}. {{ lesson.title }}
+          </span>
+        {% endif %}
+      </li>
+    {% empty %}
+      <li>فعلاً سرفصلی ثبت نشده.</li>
+    {% endfor %}
+  </ul>
+
+  <hr>
+  <h3>نظرات کاربران:</h3>
+  <ul>
+    {% for review in reviews %}
+      <li>
+        <b>{{ review.user.get_full_name|default:review.user.username }}</b>
+        - امتیاز: {{ review.rating }} ⭐
+        <br>
+        <span style="color:#eee">{{ review.comment|default:"(بدون نظر)" }}</span>
+      </li>
+    {% empty %}
+      <li>هنوز نظری ثبت نشده.</li>
+    {% endfor %}
+  </ul>
+
+  <hr>
+  {% if user.is_authenticated %}
+    {% if form %}
+      <h3>ثبت نظر شما:</h3>
+      <form method="post" style="margin-bottom:2rem;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="submit_review">ارسال نظر</button>
+      </form>
+    {% else %}
+      <p style="color:#aaf;">شما قبلاً برای این دوره نظر داده‌اید.</p>
+    {% endif %}
+  {% else %}
+    <p style="color:#eee;">برای ثبت نظر باید وارد حساب کاربری شوید.</p>
+  {% endif %}
+</div>
+<link rel="stylesheet" href="{% static 'courses/css/style.css' %}">
+<hr>
+<h3>دوره‌های مشابه</h3>
+{% if similar_courses %}
+  <div class="similar-courses-scroll">
+    {% for sc in similar_courses %}
+      <div class="similar-course-card">
+        <a href="{% url 'courses:course_detail' sc.slug %}">
+          <img src="{{ sc.thumbnail.url }}" class="similar-course-thumb">
+          <h4>{{ sc.title|truncatechars:40 }}</h4>
+        </a>
+        <p class="course-price">
+          {% if sc.price == 0 %}
+            رایگان
+          {% elif sc.has_active_discount %}
+            <del>{{ sc.price }}</del> {{ sc.get_final_price }} تومان
+          {% else %}
+            {{ sc.price }} تومان
+          {% endif %}
+        </p>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>دوره مشابهی یافت نشد.</p>
+{% endif %}
+
+<hr>
+<h3>پرسش و پاسخ:</h3>
+{% for q in questions %}
+  <div class="question-box">
+    <p><strong>{{ q.user.username }}:</strong> {{ q.question }}</p>
+    <ul>
+      {% for a in q.answers.all %}
+        <li><strong>{{ a.user.username }}</strong>: {{ a.answer }}</li>
+      {% empty %}
+        <li><em>هنوز پاسخی ثبت نشده</em></li>
+      {% endfor %}
+    </ul>
+    {% if user.is_authenticated %}
+    <form method="post" style="margin-top:1rem;">
+      {% csrf_token %}
+      {{ a_form.answer }}
+      <input type="hidden" name="question_id" value="{{ q.id }}">
+      <button type="submit" name="answer_submit">ارسال پاسخ</button>
+    </form>
+    {% endif %}
+  </div>
+{% endfor %}
+{% if user.is_authenticated %}
+  <hr>
+  <h4>سوال جدید:</h4>
+  <form method="post">
+    {% csrf_token %}
+    {{ q_form.as_p }}
+    <button type="submit" name="question_submit">ارسال سوال</button>
+  </form>
+{% else %}
+  <p>برای ارسال سوال باید وارد شوید.</p>
+{% endif %}
+{% endblock %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const timerDiv = document.getElementById('discount-timer');
+    if (!timerDiv) return;
+
+    const expiration = new Date(timerDiv.dataset.expiration.replace(/-/g, '/'));
+
+    function updateTimer() {
+      const now = new Date();
+      const diff = expiration - now;
+
+      if (diff <= 0) {
+        timerDiv.innerHTML = "مهلت تخفیف به پایان رسیده.";
+        return;
+      }
+
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      timerDiv.innerHTML = `زمان باقی‌مانده تخفیف: ${hours} ساعت ${minutes} دقیقه ${seconds} ثانیه`;
+      setTimeout(updateTimer, 1000);
+    }
+
+    updateTimer();
+  });
+</script>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'support/css/support.css' %}">
+<div class="ticket-list-container">
+    <h2 class="ticket-list-header">تیکت‌های من</h2>
+    <a href="{% url 'ticket_create' %}" class="btn-accounts">ارسال تیکت جدید</a>
+    <ul>
+        {% for t in tickets %}
+            <li class="ticket-item">
+                <a href="{% url 'ticket_detail' t.pk %}" class="ticket-link">
+                    <strong>{{ t.subject }}</strong> | {{ t.created_at|date:"Y/m/d H:i" }}
+                </a>
+                <span class="ticket-status">{{ t.get_status_display }}</span>
+            </li>
+        {% empty %}
+            <li class="ticket-item">هیچ تیکتی ثبت نکردی.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
